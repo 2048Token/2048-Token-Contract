@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
+/// @custom:security-contact support@2048token.com
 
 library Proof2048lib {
-    
-    using SafeMathUpgradeable for uint256;
 
     function ifTileIsPowerOfTwo (uint256[16] calldata _endGrid) internal pure returns (bool) {
         uint256[18] memory tiles = [uint256(0),2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072];
@@ -38,7 +36,7 @@ library Proof2048lib {
     function log_2(uint256 _tile) internal pure returns (uint256){
        // uint256[17] tiles = [uint256(2),4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072];
         uint256 j = 0; 
-        require (_tile != 0, "Logarithm not accepting 0 as an argument");
+        require (_tile != 0, "Logarithm not accepting 0");
         for (uint256 i = 1; i <= 17; i++ ) { 
            if (_tile == 2**i) {
                 j = i;
@@ -63,18 +61,18 @@ library Proof2048lib {
         
         //2. _totalSessionTime should exceed minimally required time for human based on the maxTile achieved
         if (maxTile > 2048) {
-            minTotalTime = maxTile.div(3);
-            minNumMoves = maxTile.div(2);
+            minTotalTime = maxTile / 3;
+            minNumMoves = maxTile / 2;
         } else if (maxTile >= 1024 && maxTile <= 2048) {
-            minTotalTime = maxTile.div(4);
-            minNumMoves = maxTile.div(3);
+            minTotalTime = maxTile / 4;
+            minNumMoves = maxTile / 3;
         } else {
             minTotalTime = 0;
             minNumMoves = 0;
         }
 
         //3. check _totalNumMoves / _totalSessionTime is over human limit
-        uint256 moveSpeed = _totalNumMoves.div(_totalSessionTime);
+        uint256 moveSpeed = _totalNumMoves / _totalSessionTime;
 
         // summarize
         if (_score <= maxScore && _totalSessionTime >= minTotalTime && _totalNumMoves >= minNumMoves && moveSpeed <= 4 ) {return true;}

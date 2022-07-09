@@ -6,7 +6,8 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-/// @custom:security-contact admin@cryptomygame.com
+/// @custom:security-contact support@2048token.com
+
 contract Crypto2048Token is Initializable, ERC20Upgradeable, PausableUpgradeable, OwnableUpgradeable {
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -17,7 +18,7 @@ contract Crypto2048Token is Initializable, ERC20Upgradeable, PausableUpgradeable
         __ERC20_init("2048 Token", "2048T");
         __Pausable_init();
         __Ownable_init();
-        _mint(msg.sender, 10000000000 * 10 ** decimals()); //mint 1 billion CMG 
+        _mint(msg.sender, 1000000000 * 10 ** decimals()); //mint 1 billion 2048 Tokens; cap total circulation to 10 billions on multi-chains
     }
 
     function pause() public onlyOwner {
